@@ -1,0 +1,157 @@
+/* Цвета берутся из темы Telegram (themeParams -> --tg-theme-*), запасные — светлая тема из макета */
+:root {
+  --bg: var(--tg-theme-bg-color, #ffffff);
+  --secondary-bg: var(--tg-theme-secondary-bg-color, #f1f4f9);
+  --text: var(--tg-theme-text-color, #1d2127);
+  --hint: var(--tg-theme-hint-color, #8a94a3);
+  --link: var(--tg-theme-link-color, #2f7fc6);
+  --button: var(--accent);  /* кнопки и выбранные чипсы — оранжевый SUPPLY, не цвет темы Telegram */
+  --button-text: #ffffff;
+  --accent: #fe6a00;  /* оранжевый SUPPLY, как плашка на фото */
+  --warn: #d9822b;
+  --ok: #2e9b5e;
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: -apple-system, "SF Pro Text", "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+#app { padding: 12px 16px 96px; max-width: 640px; margin: 0 auto; }
+.state { padding: 80px 20px; text-align: center; color: var(--hint); line-height: 1.5; }
+.state .retry { margin-top: 16px; color: var(--link); font-weight: 600; }
+
+.back { color: var(--link); font-size: 15px; margin-bottom: 10px; display: inline-block; }
+.topbar { display: flex; gap: 10px; align-items: center; }
+.search { flex: 1; height: 42px; border-radius: 12px; background: var(--secondary-bg); border: 0; padding: 0 14px;
+  font-size: 15px; color: var(--text); outline: none; }
+.search::placeholder { color: var(--hint); }
+.cart-ico { width: 42px; height: 42px; border-radius: 12px; background: var(--secondary-bg); position: relative;
+  display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; }
+.cart-ico svg { width: 22px; height: 22px; color: var(--accent); }
+.cart-ico i { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; border-radius: 9px;
+  background: var(--accent); color: #fff; font-size: 11px; font-style: normal; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; padding: 0 4px; }
+
+.banner { margin-top: 12px; border-radius: var(--radius); background: linear-gradient(135deg, #fe6a00, #ff8f3d);
+  color: #fff; padding: 16px; }
+.banner b { font-size: 18px; display: block; line-height: 1.25; }
+.banner span { font-size: 13px; opacity: .92; display: block; margin-top: 10px; line-height: 1.4; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.tile { height: 120px; border-radius: var(--radius); background: var(--accent); position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; text-align: left; }
+.tile img { width: 100%; height: 100%; object-fit: cover; }
+.tile.all { background: var(--secondary-bg); color: var(--accent); font-weight: 800; font-size: 26px;
+  padding-bottom: 28px; }
+.tile.cat { font-size: 21px; }
+.tile.cat svg { width: 60px; height: 60px; }
+.tile .lbl { position: absolute; left: 10px; bottom: 10px; background: #fff; color: #1d2127; border-radius: 8px;
+  padding: 4px 8px; font-size: 13px; font-weight: 600; }
+.tile .cnt { position: absolute; right: 8px; top: 8px; font-size: 11px; font-weight: 700; color: #1d2127;
+  background: rgba(255,255,255,.85); border-radius: 6px; padding: 1px 6px; }
+
+.chips { display: flex; gap: 8px; margin-top: 12px; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex-shrink: 0; padding: 7px 12px; border-radius: 999px; background: var(--secondary-bg);
+  font-size: 13px; font-weight: 500; white-space: nowrap; }
+.chip.on { background: var(--button); color: var(--button-text); }
+.chips.wrap { flex-wrap: wrap; overflow: visible; }
+.chips.wrap .chip { min-width: 52px; text-align: center; }
+.chip .n { font-size: 11px; color: var(--hint); margin-left: 5px; }
+.chip.on .n { color: inherit; opacity: .7; }
+.chips-label { font-size: 12px; color: var(--hint); margin-top: 12px; }
+.filter-btn { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 999px;
+  background: var(--secondary-bg); font-size: 14px; font-weight: 600; flex-shrink: 0; }
+.filter-btn svg { width: 18px; height: 18px; }
+.filter-btn i { font-style: normal; min-width: 18px; height: 18px; border-radius: 9px; background: #fff; color: var(--accent);
+  font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 4px; }
+.filter-btn.on { background: var(--accent); color: #fff; }
+.sheet-bg { position: fixed; inset: 0; background: rgba(15, 18, 25, .45); z-index: 20; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; max-height: 80vh; overflow-y: auto; max-width: 640px;
+  margin: 0 auto; background: var(--bg); border-radius: 20px 20px 0 0; padding: 8px 16px 14px; }
+.sheet::before { content: ""; display: block; width: 40px; height: 4px; border-radius: 2px; margin: 0 auto 10px;
+  background: color-mix(in srgb, var(--hint) 45%, transparent); }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; }
+.sheet-head b { font-size: 18px; }
+.sheet-reset { color: var(--accent); font-weight: 600; font-size: 15px; }
+/* кнопка шторки прилипает к низу и не наезжает на размеры: отступ сверху и белая подложка */
+.sheet-foot { position: sticky; bottom: calc(-14px - env(safe-area-inset-bottom)); margin-top: 20px; background: var(--bg);
+  padding: 10px 0 calc(14px + env(safe-area-inset-bottom)); }
+body.no-scroll { overflow: hidden; }
+.head { display: flex; justify-content: space-between; align-items: center; margin: 16px 0 10px; gap: 8px; }
+.head b { font-size: 20px; }
+.head b .muted { font-weight: 400; margin-left: 4px; }
+.muted { color: var(--hint); font-size: 13px; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 10px; align-items: start; }  /* кнопка-карточка иначе центрирует содержимое по высоте ряда */
+.card { text-align: left; display: block; }
+.ph { aspect-ratio: 4 / 5; border-radius: 14px; background: var(--secondary-bg); overflow: hidden; }
+.ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card .name { font-size: 13px; margin-top: 8px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden; }
+.card .sizes { font-size: 11px; color: var(--hint); margin-top: 3px; }
+.card .price { font-size: 16px; font-weight: 700; margin-top: 5px; }
+.empty { padding: 40px 0; text-align: center; color: var(--hint); }
+
+.gallery { margin: 0 -16px; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.gallery::-webkit-scrollbar { display: none; }
+.gallery img { width: 100%; flex-shrink: 0; scroll-snap-align: center; aspect-ratio: 4 / 5; object-fit: cover;
+  background: var(--secondary-bg); }
+.dots { display: flex; gap: 5px; justify-content: center; margin-top: 8px; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--hint); opacity: .4; }
+.dots i.on { width: 22px; border-radius: 4px; background: var(--text); opacity: 1; }
+.brand { font-size: 13px; color: var(--hint); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; margin-top: 14px; }
+.title { font-size: 19px; font-weight: 700; margin-top: 3px; line-height: 1.25; }
+.box { background: var(--secondary-bg); border-radius: var(--radius); padding: 12px 14px; margin-top: 12px; }
+.box .p { font-size: 24px; font-weight: 800; }
+.box h3 { font-size: 15px; margin-bottom: 10px; }
+.sizes-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.sz { min-width: 46px; height: 40px; padding: 0 12px; border-radius: 10px; background: var(--bg);
+  border: 1.5px solid color-mix(in srgb, var(--hint) 35%, transparent); font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; }
+.sz.on { border-color: var(--button); background: var(--button); color: var(--button-text); }
+.sz .left { font-size: 10px; font-weight: 500; color: var(--warn); margin-left: 4px; }
+.sz.on .left { color: #ffc98a; }
+
+.cart-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--secondary-bg); align-items: center; }
+.cart-item .ph { width: 72px; flex-shrink: 0; border-radius: 12px; }
+.cart-item .info { flex: 1; min-width: 0; }
+.cart-item .n { font-size: 14px; line-height: 1.3; }
+.cart-item .s { font-size: 12px; color: var(--hint); margin-top: 3px; }
+.cart-item .pr { font-size: 15px; font-weight: 700; margin-top: 5px; }
+.cart-item .del { color: var(--hint); font-size: 18px; padding: 8px; }
+.total { display: flex; justify-content: space-between; font-size: 16px; margin-top: 16px; }
+.total b { font-size: 18px; }
+.note { margin-top: 14px; font-size: 13px; color: var(--hint); line-height: 1.45; }
+
+.done { text-align: center; padding-top: 24px; }
+.done .ok { width: 72px; height: 72px; border-radius: 50%; background: #e3f4ea; color: var(--ok); font-size: 36px;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+.done h2 { margin: 18px 0 8px; font-size: 20px; }
+.done p { color: var(--hint); font-size: 14px; line-height: 1.45; }
+.order-text { width: 100%; margin-top: 16px; overflow: hidden; border-radius: 12px; border: 0; padding: 12px;
+  background: var(--secondary-bg); color: var(--text); font-family: inherit; font-size: 13px; line-height: 1.45;
+  resize: none; }
+.link-btn { color: var(--link); font-weight: 600; font-size: 15px; margin-top: 16px; }
+
+.bottom { position: fixed; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(14px + env(safe-area-inset-bottom));
+  background: var(--bg); border-top: 1px solid var(--secondary-bg); }
+.main-btn { width: 100%; max-width: 608px; margin: 0 auto; display: block; height: 50px; border-radius: 12px;
+  background: var(--button); color: var(--button-text); font-weight: 600; font-size: 16px; }
+.main-btn:disabled { opacity: .45; }
+.toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); background: rgba(20,25,35,.92);
+  color: #fff; font-size: 14px; padding: 10px 16px; border-radius: 10px; z-index: 10; }
+
+/* Финальный экран: оранжевая галочка, шаги, кнопка копирования в поле, возврат в каталог */
+.done .ok { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+.done .ok svg { width: 36px; height: 36px; stroke-width: 2.6; }
+.copied { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 14px; border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); font-weight: 600; font-size: 14px; }
+.copied svg { width: 16px; height: 16px; stroke-width: 3; }
+.steps { list-style: none; counter-reset: st; text-align: left; margin-top: 18px; display: grid; gap: 12px; }
+.steps li { counter-increment: st; display: flex; gap: 12px; align-items: center; font-size: 15px; line-height: 1.35; }
+.steps li::before { content: counter(st); flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+.order-box { position: relative; margin-top: 18px; }
+.order-box .order-text { margin-top: 0; padding-right: 48px; }
+.copy-btn { position: absolute; top: 6px; right: 6px; width: 36px; height: 36px; border-radius: 10px; color: var(--accent);
+  display: flex; align-items: center; justify-content: center; }
+.copy-btn svg { width: 20px; height: 20px; }
